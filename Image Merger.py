@@ -1,7 +1,7 @@
 import sys
 from PIL import Image
 
-print("Entre image paths \n exapmle: /storage/emulated/0/Download/20230704.jpg \n (when you done type letter V or H): ")
+print("Entre image paths \n exapmle: /storage/emulated/0/Download/20230704.jpg \n (when you done type letter V (for vertical)  or  H (for horizontal): ")
 
 methode = ["h", "H", "v", "V"]
 imglist = []
@@ -15,7 +15,7 @@ while img not in methode:
 images = [Image.open(x) for x in imglist[:-1]]
 widths, heights = zip(*(i.size for i in images))
 
-name = input("New image name (example Final): ")
+name = input("New image name (example: FinalImg): ")
 
 def get_concat_h_cut_center(images, widths, heights):
     total_width = sum(widths)
@@ -25,7 +25,7 @@ def get_concat_h_cut_center(images, widths, heights):
     for im in images:
         dst.paste(im, (x_offset,0))
         x_offset += im.size[0]
-    dst = dst.resize((int(dst.size[0]/10), int(dst.size[1]/10)))
+    dst = dst.resize((int(dst.size[0]), int(dst.size[1])))
     return dst
 
 
@@ -41,12 +41,12 @@ def get_concat_v_cut_center(images, widths, heights):
     for im in images:
         dst.paste(im, (0, y_offset))
         y_offset += im.size[1]
-    dst = dst.resize((int(dst.size[0]/10), int(dst.size[1]/10)))
+    dst = dst.resize((int(dst.size[0]), int(dst.size[1])))
     return dst
     
 
 if (img == "v" or img == "V"):
-    get_concat_v_cut_center(images, widths, heights).save('/storage/emulated/0/Download/MergedImages/' + name + '.jpg')
+    get_concat_v_cut_center(images, widths, heights).save('/storage/emulated/0/Download/' + name + '.jpg')
     
 elif (img == "h" or img == "H"):
-    get_concat_h_cut_center(images, widths, heights).save('/storage/emulated/0/Download/MergedImages/' + name + '.jpg')
+    get_concat_h_cut_center(images, widths, heights).save('/storage/emulated/0/Download/' + name + '.jpg')
